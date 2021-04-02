@@ -1,7 +1,8 @@
-#update & upgrade
-#i3 configuration
+#update_and_upgrade
+i3_configuration
 #extracting
-#creating extract file
-#install programms
-#alias
+#creating_extract_file
+install_programms
+alias
 #git
+os=manjaro
