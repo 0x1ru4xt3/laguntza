@@ -15,19 +15,26 @@ echo
 echo -e "${yel}  Configuring laguntza   "
 echo
 
-# Create directory in config
+## Create directory in config
+# Get current users home directory
+cur_dir=$(pwd)
+IFS='/'
+read -rA USERPATH <<< "$cur_dir"
+user=$(echo "${USERPATH[3]}")
+
+# X
 if [[ ! -d ~/.config/laguntza ]]
 then
-    mkdir ~/.config/laguntza
-    cp laguntza.sh ~/.config/laguntza/laguntza.sh
-    chmod +x ~/.config/laguntza/laguntza.sh 
-    cp install.sh ~/.config/laguntza/install.sh
-    chmod +x ~/.config/laguntza/install.sh     
-    cp conf ~/.config/laguntza/conf
+    mkdir /home/$user/.config/laguntza
+    cp laguntza.sh /home/$user/.config/laguntza/laguntza.sh
+    chmod +x /home/$user/.config/laguntza/laguntza.sh 
+    cp install.sh /home/$user/.config/laguntza/install.sh
+    chmod +x /home/$user/.config/laguntza/install.sh     
+    cp conf /home/$user/.config/laguntza/conf
 fi
 
 # Defining variables
-confile=~/.config/laguntza/conf
+confile=/home/$user/.config/laguntza/conf
 issues=$(cat $confile)
 os_marked=0
 
@@ -35,7 +42,7 @@ os_marked=0
 echo -e "${blu}> Add your needed helps"
 for issue in $issues
 do
-    if [[ $(cat ~/.config/laguntza/laguntza.sh | grep os=) != "" ]]
+    if [[ $(cat /home/$user/.config/laguntza/laguntza.sh | grep os=) != "" ]]
     then
         os_marked=1
     fi
@@ -67,18 +74,19 @@ fi
 
 # Set executer alias
 echo -e "${blu}> Creating alias for execution..."
-echo -e "${gre}> Looks like your are using" $SHELL "emulator"
+user_sh=$(getent passwd $user | cut -d: -f7)
+echo -e "${gre}> Looks like your default emulator is" $user_sh
 
-alias=$(echo "sh ~/.config/laguntza/laguntza.sh")
+alias=$(echo "./home/$user/.config/laguntza/laguntza.sh")
 if [[ "$SHELL" == *zsh* ]]
 then
-    sed -i '/alias laguntza/d' ~/.zshrc
-    echo "alias laguntza=\"$alias\"" >> ~/.zshrc
+    sed -i '/alias laguntza/d' /home/$user/.zshrc
+    echo "alias laguntza=\"$alias\"" >> /home/$user/.zshrc
     echo -e "${red}run 'source ~/.zshrc' to restart shell configuration."
 elif [[ "$SHELL" == *bash* ]]
 then
-    sed -i '/laguntza/d' ~/.bashrc
-    echo "alias laguntza=\"$alias\"" >> ~/.bashrc
+    sed -i '/laguntza/d' /home/$user/.bashrc
+    echo "alias laguntza=\"$alias\"" >> /home/$user/.bashrc
     echo -e "${red}run 'source ~/.bashrc' to restart shell configuration."
 fi
 
