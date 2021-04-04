@@ -80,11 +80,8 @@ then
     sed -i '/laguntza/d' ~/.bashrc
     echo "alias laguntza=\"$alias\"" >> ~/.bashrc
     echo -e "${red}run 'source ~/.bashrc' to restart shell configuration."
-elif [[ "$SHELL" == *fish* ]]
-then
-    function laguntza; $alias; end; && funcsave laguntza
 fi
 
 # Finished.
-echo -e "${yel}> Succesfully finished. Try 'laguntza' after restarting shell configuration."
+echo -e "${yel}> Succesfully finished. Try 'laguntza' after restarting shell configuration.${whi}"
 exit 1
