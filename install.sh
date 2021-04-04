@@ -19,7 +19,7 @@ echo
 # Get current users name (for working directory)
 cur_dir=$(pwd)
 IFS='/'
-if [[ read -rA USERPATH <<< "$cur_dir" != 0 ]]
+if [[ $(read -rA USERPATH <<< "$cur_dir") != 0 ]]
 then
     if [[ read -ra USERPATH <<< "$cur_dir" != 0 ]]
     then
