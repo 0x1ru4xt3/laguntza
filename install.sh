@@ -1,9 +1,14 @@
+#!/bin/bash
+
 # Defining colors
 red='\e[0;31m';
 gre='\e[0;32m';
 yel='\e[1;33m';
 blu='\e[1;34m';
 whi='\e[0;37m';
+
+# Check if is running as root
+[[ $EUID -ne 0 ]] && echo "This script must be run as root." && exit 1
 
 # Start execution
 echo
@@ -15,7 +20,9 @@ if [[ ! -d ~/.config/laguntza ]]
 then
     mkdir ~/.config/laguntza
     cp laguntza.sh ~/.config/laguntza/laguntza.sh
+    chmod +x ~/.config/laguntza/laguntza.sh 
     cp install.sh ~/.config/laguntza/install.sh
+    chmod +x ~/.config/laguntza/install.sh     
     cp conf ~/.config/laguntza/conf
 fi
 
@@ -73,11 +80,11 @@ then
     sed -i '/laguntza/d' ~/.bashrc
     echo "alias laguntza=\"$alias\"" >> ~/.bashrc
     echo -e "${red}run 'source ~/.bashrc' to restart shell configuration."
-#elif [[ "$SHELL" == *fish* ]]
-#then
-#    echo function laguntza; $alias; end; && funcsave laguntza
+elif [[ "$SHELL" == *fish* ]]
+then
+    function laguntza; $alias; end; && funcsave laguntza
 fi
 
 # Finished.
 echo -e "${yel}> Succesfully finished. Try 'laguntza' after restarting shell configuration."
-exit 0
+exit 1
