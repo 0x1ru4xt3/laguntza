@@ -21,7 +21,7 @@ cur_dir=$(pwd)
 IFS='/'
 if [[ $(read -rA USERPATH <<< "$cur_dir") != 0 ]]
 then
-    if [[ read -ra USERPATH <<< "$cur_dir" != 0 ]]
+    if [[ $(read -ra USERPATH <<< "$cur_dir") != 0 ]]
     then
         echo "read command failed." && exit 1;
     fi
