@@ -16,16 +16,22 @@ echo -e "${yel}  Configuring laguntza   "
 echo
 
 ## Create directory in config
-# Get current users home directory
+# Get current users name (for working directory)
 cur_dir=$(pwd)
 IFS='/'
-read -rA USERPATH <<< "$cur_dir"
+if [[ read -rA USERPATH <<< "$cur_dir" != 0 ]]
+then
+    if [[ read -ra USERPATH <<< "$cur_dir" != 0 ]]
+    then
+        echo "read command failed." && exit 1;
+    fi
+fi
 user=$(echo "${USERPATH[3]}")
 
-# X
-if [[ ! -d ~/.config/laguntza ]]
+# 
+if [[ ! -d /home/$user/.config/laguntza ]]
 then
-    mkdir /home/$user/.config/laguntza
+    mkdir /home$user/.config/laguntza
     cp laguntza.sh /home/$user/.config/laguntza/laguntza.sh
     chmod +x /home/$user/.config/laguntza/laguntza.sh 
     cp install.sh /home/$user/.config/laguntza/install.sh
