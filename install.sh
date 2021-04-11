@@ -12,26 +12,20 @@ whi='\e[0;37m';
 
 # Start execution
 echo
-echo -e "${yel}  Configuring laguntza   "
+echo -e "${yel}  Configuring laguntza${whi}"
 echo
 
 ## Create directory in config
 # Get current users name (for working directory)
 cur_dir=$(pwd)
 IFS='/'
-if [[ $(read -rA USERPATH <<< "$cur_dir") != 0 ]]
-then
-    if [[ $(read -ra USERPATH <<< "$cur_dir") != 0 ]]
-    then
-        echo "read command failed." && exit 1;
-    fi
-fi
+read -ra USERPATH <<< "$cur_dir"
 user=$(echo "${USERPATH[3]}")
 
 # 
 if [[ ! -d /home/$user/.config/laguntza ]]
 then
-    mkdir /home$user/.config/laguntza
+    mkdir -p /home$user/.config/laguntza
     cp laguntza.sh /home/$user/.config/laguntza/laguntza.sh
     chmod +x /home/$user/.config/laguntza/laguntza.sh 
     cp install.sh /home/$user/.config/laguntza/install.sh
