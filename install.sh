@@ -20,12 +20,19 @@ echo
 cur_dir=$(pwd)
 IFS='/'
 read -ra USERPATH <<< "$cur_dir"
-user=$(echo "${USERPATH[3]}")
+for i in 0 1 2 3 4
+do
+    if [[ $(echo "${USERPATH[i]}") == "home" ]]
+    then
+        user=$(echo "${USERPATH[($i)+1]}")
+        break
+    fi
+done
 
 # 
 if [[ ! -d /home/$user/.config/laguntza ]]
 then
-    mkdir -p /home$user/.config/laguntza
+    mkdir -p /home/$user/.config/laguntza
     cp laguntza.sh /home/$user/.config/laguntza/laguntza.sh
     chmod +x /home/$user/.config/laguntza/laguntza.sh 
     cp install.sh /home/$user/.config/laguntza/install.sh
@@ -34,7 +41,7 @@ then
 fi
 
 # Defining variables
-confile=/home/$user/.config/laguntza/conf
+confile="/home/$user/.config/laguntza/conf"
 issues=$(cat $confile)
 os_marked=0
 
