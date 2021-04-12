@@ -12,8 +12,8 @@ cnf=$(cat $config)
 ## FLAGS
 if [[ "$@" == *-conf* ]]
 then
-    sh ~/.config/laguntza/install.sh
-    exit 0
+	.~/.config/laguntza/install.sh
+	exit 0
 fi
 
 ## ECHO PROGRAM

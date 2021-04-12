@@ -7,9 +7,6 @@ yel='\e[1;33m';
 blu='\e[1;34m';
 whi='\e[0;37m';
 
-# Check if is running as root
-[[ $EUID -ne 0 ]] && echo "This script must be run as root." && exit 1
-
 # Start execution
 echo
 echo -e "${yel}  Configuring laguntza${whi}"
@@ -32,11 +29,11 @@ done
 # Create structure
 if [[ ! -d /home/$user/.config/laguntza ]]
 then
-    mkdir -p /home/$user/.config/laguntza
-    cp laguntza.sh /home/$user/.config/laguntza/laguntza.sh
-    chmod +x /home/$user/.config/laguntza/laguntza.sh
-    cp install.sh /home/$user/.config/laguntza/install.sh
-    chmod +x /home/$user/.config/laguntza/install.sh
+    mkdir -p /home/$user/.config/laguntza &&
+    cp laguntza.sh /home/$user/.config/laguntza/laguntza.sh &&
+    chmod +x /home/$user/.config/laguntza/laguntza.sh &&
+    cp install.sh /home/$user/.config/laguntza/install.sh &&
+    chmod +x /home/$user/.config/laguntza/install.sh &&
     cp conf /home/$user/.config/laguntza/conf
 fi
 
