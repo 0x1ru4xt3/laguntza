@@ -29,32 +29,35 @@ do
     fi
 done
 
-# 
+# Create structure
 if [[ ! -d /home/$user/.config/laguntza ]]
 then
     mkdir -p /home/$user/.config/laguntza
     cp laguntza.sh /home/$user/.config/laguntza/laguntza.sh
-    chmod +x /home/$user/.config/laguntza/laguntza.sh 
+    chmod +x /home/$user/.config/laguntza/laguntza.sh
     cp install.sh /home/$user/.config/laguntza/install.sh
-    chmod +x /home/$user/.config/laguntza/install.sh     
+    chmod +x /home/$user/.config/laguntza/install.sh
     cp conf /home/$user/.config/laguntza/conf
 fi
 
 # Defining variables
-confile="/home/$user/.config/laguntza/conf"
-issues=$(cat $confile)
 os_marked=0
+issues=()
+confile=$(echo "/home/$user/.config/laguntza/conf")
+while IFS= read -r line; do
+	issues+=("$line")
+done < "$confile"
 
 # Select needed help
 echo -e "${blu}> Add your needed helps"
-for issue in $issues
+for issue in "${issues[@]}"
 do
     if [[ $(cat /home/$user/.config/laguntza/laguntza.sh | grep os=) != "" ]]
     then
         os_marked=1
     fi
 
-    echo -e "${whi}Do you want to get info about" $issue "printed? (Y/n)"
+    echo -e "${whi}Do you want to get info about $issue printed? (Y/n)"
     read -sn 1 answere
 
     if [[ "$answere" == "y" || "$answere" == "" ]]
@@ -64,10 +67,9 @@ do
     else
         if [[ $(echo $issue | cut -c1) != "#" ]]
         then
-           sed -i 's,'"$issue"',#'"$issue"',' "$confile"        
+           sed -i 's,'"$issue"',#'"$issue"',' "$confile"
         fi
     fi
-
 done
 
 # Get OS
@@ -84,7 +86,7 @@ echo -e "${blu}> Creating alias for execution..."
 user_sh=$(getent passwd $user | cut -d: -f7)
 echo -e "${gre}> Looks like your default emulator is" $user_sh
 
-alias=$(echo "./home/$user/.config/laguntza/laguntza.sh")
+alias=$(echo "/home/$user/.config/laguntza/laguntza.sh")
 if [[ "$SHELL" == *zsh* ]]
 then
     sed -i '/alias laguntza/d' /home/$user/.zshrc
