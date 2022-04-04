@@ -2,7 +2,7 @@
 clear
 
 ## VARIABLES
-os=manjaro
+os=
 yel='\e[1;33m';
 blu='\e[1;34m';
 whi='\e[0;37m';
