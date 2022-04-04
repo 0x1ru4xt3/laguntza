@@ -49,7 +49,7 @@ done < "$confile"
 echo -e "${blu}> Add your needed helps"
 for issue in "${issues[@]}"
 do
-    if [[ $(cat /home/$user/.config/laguntza/laguntza.sh | grep os=) != "" ]]
+    if [[ $(cat /home/$user/.config/laguntza/laguntza.sh | grep os=) != "os=" ]]
     then
         os_marked=1
     fi
@@ -73,9 +73,9 @@ done
 echo -e "${blu}> Obtaining OS..."
 os=$(cat /etc/os-release | grep -E '\bID='| tr "=" "\n" | grep -v ID)
 echo -e "${gre}> Looks like you are using $os."
-if [[ os_marked -eq 0 ]]
+if [[ $os_marked -eq 0 ]]
 then
-    sed -i 's,#flag,os='"$os"',' laguntza.sh
+    sed -i 's/os=/os=debian/g' /home/$user/.config/laguntza/laguntza.sh
 fi
 
 # Set executer alias and emulator
