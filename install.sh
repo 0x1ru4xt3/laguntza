@@ -78,7 +78,7 @@ then
     sed -i 's,#flag,os='"$os"',' laguntza.sh
 fi
 
-# Set executer alias
+# Set executer alias and emulator
 echo -e "${blu}> Creating alias for execution..."
 user_sh=$(getent passwd $user | cut -d: -f7)
 echo -e "${gre}> Looks like your default emulator is" $user_sh

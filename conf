@@ -1,7 +1,7 @@
 update_and_upgrade
-#i3_configuration
-#extracting
+i3_configuration
+extracting
 creating_extract_file
 install_programs
-#alias
-#git
+alias
+git
